@@ -83,15 +83,33 @@ $blankt = 0;
 			break;
 	}
 
+//Generera en saltad hashtag med mailaddressen som används till att validera rösterna senare. Saltet är ett slumpmässigt 256 byte långt hexadecimalt tal.
+$mail = mysql_real_escape_string($row['mail']);
+$salt = bin2hex(openssl_random_pseudo_bytes(256));
+$hashtag = hash('sha256', $mail.$salt);
+
 //Spara rösten, samt uppgifterna från medlemsregistret och vilket datum rösten registrerades.
 $date = date("Y-m-d");
-$mail = mysql_real_escape_string($row['mail']);
-$sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt')";
+$sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
 mysql_query($sql, $con) OR die(mysql_error());
-
-echo "Tack för din röst!";
-
 mysql_close($con);
+
+//Skicka ut valideringsmailet
+$file = fopen("message.txt", "w");
+$message = "Hej!\n\nVårat system har upptäckt att någon har använt ditt namn för att lägga en röst på http://fyskam.fysik.uu.se/votering. Om personen var du, var vänlig validera din röst genom att klicka på följande länk:\n\nhttp://130.243.138.114/votering/validate.php?v=$hashtag\n\nannars var vänlig ignorera detta mail.\n";
+fwrite($file, $message);
+fclose($file);
+$cmd = "mail -s \"Var vänlig validera din röst\" $mail < message.txt";
+shell_exec($cmd);
+
+//Försäkra oss om att filen är tom
+$file = fopen("message.txt", "w");
+fwrite($file, "");
+fclose($file);
+//shell_exec('rm message.txt');
+
+echo "Tack för din röst!</br></br>Du kommer inom kort på ett bekräftelsemail med en länk som du måste följa innan rösten räknas. Kontrollera så att mailet inte har sorterats som skräppost. Om du inte fått mailet inom några timmar ta kontakt med Informationsansvarig på <a href=\"mailto:nvf-info@utn.se\">nvf-info@utn.se</a>.";
+
 ?>
 	</body>
 </html>
