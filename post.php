@@ -106,7 +106,7 @@ mysql_close($con);
 
 //Skicka ut valideringsmailet
 $file = fopen("message.txt", "w");
-$message = "Hej!\n\nVårat system har upptäckt att någon har använt ditt namn för att lägga en röst på http://fyskam.fysik.uu.se/votering. Om personen var du, var vänlig validera din röst genom att klicka på följande länk:\n\nhttp://130.243.138.114/votering/validate.php?v=$hashtag\n\nannars var vänlig ignorera detta mail.\n";
+$message = "Hej!\n\nVårat system har upptäckt att någon har använt ditt namn för att lägga en röst på http://fyskam.fysik.uu.se/votering. Om personen var du, var vänlig validera din röst genom att klicka på följande länk:\nhttp://130.243.138.114/votering/validate.php?v=$hashtag\nannars var vänlig ignorera detta mail.";
 fwrite($file, $message);
 fclose($file);
 $cmd = "mail -s \"Var vänlig validera din röst\" $mail < message.txt";
