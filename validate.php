@@ -1,6 +1,6 @@
 <?php header("Content-Type: text/html; charset=utf8");?>
 
-</html>
+<html>
 	<head></head>
 	<body>
 <?php
