@@ -16,9 +16,11 @@ $TABLE = 'votes';
 //Städa hashtaggen
 $hashtag = mysql_real_escape_string($hashtag);
 
-//Kolla att hashtaggen finns
+//Kolla att hashtaggen finns, och att det finns exakt 1 av den
 $result = mysql_query("select hashtag from $TABLE where hashtag='$hashtag'", $con);
-if (!mysql_fetch_array($result)) die('Kunde inte hitta dig... ' . mysql_error());
+$numrows = mysql_num_rows($result);
+if ($numrows == 0) die('Kunde inte hitta dig... ');
+if ($numrows != 1) die('Ops... Det verkar ha skett en hashkollision. Det är bäst du tar kontakt med NSA.');
 
 //Uppdatera
 $sql = "update $TABLE set validated='1' where hashtag='$hashtag'";
