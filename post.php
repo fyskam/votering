@@ -48,7 +48,7 @@ $row = mysql_fetch_array($result);
 if (!$row) die('Är du verkligen medlem? ('.mysql_error().')');
 
 //Nu börjar vi bli paranoida, men trippelkolla för säkerhets skull
-if ( $row['firstname'] != $firstname || $row['lastname'] != $lastname || $row['persnr'] != $bday ) die('Du verkar inte finnas i register. Kolla dina uppgifter');
+if ( strtolower($row['firstname']) != strtolower($firstname) || strtolower($row['lastname']) != strtolower($lastname) || strtolower($row['persnr']) != strtolower($bday) ) die('Du verkar inte finnas i register. Kolla dina uppgifter');
 
 //Byt databas till rösterna
 mysql_select_db("testvotering", $con) OR die(mysql_error());
