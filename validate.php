@@ -25,6 +25,11 @@ if ($numrows != 1) die('Ops... Det verkar ha skett en hashkollision. Det är bä
 //Uppdatera
 $sql = "update $TABLE set validated='1' where hashtag='$hashtag'";
 mysql_query($sql, $con);
+
+//Kolla så att allting gick okej
+if (mysql_affected_rows() == -1) die('Ett oväntat fel inträffade, försök igen. Om problemet kvarstår kontakta Informationsansvarig på <a href=\"mailto:nvf-info@utn.se\">nvf-info@utn.se</a>.');
+if (mysql_affected_rows() != 1) die('Ett oväntat fel inträffade, försök igen. Om problemet kvarstår kontakta Informationsansvarig på <a href=\"mailto:nvf-info@utn.se\">nvf-info@utn.se</a>.');
+
 mysql_close($con);
 echo "Din röst är räknad, tack för ditt engagemang!";
 

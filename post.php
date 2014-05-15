@@ -102,6 +102,10 @@ $hashtag = hash('sha256', $mail.$salt);
 $date = date("Y-m-d");
 $sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
 mysql_query($sql, $con) OR die(mysql_error());
+
+//Kolla så att allting gick okej
+if (mysql_affected_rows() == -1) die('Ett oväntat fel inträffade, försök igen. Om problemet kvarstår kontakta Informationsansvarig på <a href=\"mailto:nvf-info@utn.se\">nvf-info@utn.se</a>.');
+if (mysql_affected_rows() != 1) die('Ett oväntat fel inträffade, försök igen. Om problemet kvarstår kontakta Informationsansvarig på <a href=\"mailto:nvf-info@utn.se\">nvf-info@utn.se</a>.');
 mysql_close($con);
 
 //Skicka ut valideringsmailet
