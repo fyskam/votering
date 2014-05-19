@@ -30,13 +30,9 @@ $firstname = mysql_real_escape_string($_POST[fname]);
 $lastname = mysql_real_escape_string($_POST[lname]);
 $bday = mysql_real_escape_string($_POST[nr]);
 
-//var_dump($firstname);
-
-
 //Hämta rätt inlägg i databasen
 $sql = "select * from $TABLE where firstname='$firstname' and lastname='$lastname' and persnr='$bday'";
 $result = mysql_query($sql, $con);
-//var_dump($result);
 
 //Kontrollera så att inget har fått fel och vi har hittat något
 if (!$result) die(mysql_error());
@@ -47,7 +43,6 @@ if ($numrows == 0) die('Vi kan inte matcha dina uppgifter i registret. Försök 
 if ($numrows != 1) die('Vi verkar ha fått fler än en träff på dina uppgifter. Kontakta Informationsansvarig på <a href="mailto:nvf-info@utn.se">nvf-info@utn.se</a>.');
 
 $row = mysql_fetch_array($result);
-//var_dump($row);
 
 //Dubbelkolla
 if (!$row) die('Är du verkligen medlem? ('.mysql_error().')');
@@ -73,19 +68,15 @@ $blankt = 0;
 //Kolla vad vi faktiskt har röstat på
 	switch ($_POST[vote]) {
 		case 1:
-			//echo "Du röstade på Labbrock!";
 			$labbrock = 1;
 			break;
 		case 2:
-			//echo "Du röstade på Overall!";
 			$overall = 1;
 			break;
 		case 3:
-			//echo "Du röstade på en modifierad variant av Skamkappan!";
 			$skamkappa = 1;
 			break;
 		case 4:
-			//echo "Du röstade blankt!";
 			$blankt = 1;
 			break;
 		default:
@@ -100,8 +91,7 @@ $hashtag = hash('sha256', $mail.$salt);
 
 //Spara rösten, samt uppgifterna från medlemsregistret och vilket datum rösten registrerades.
 $date = date("Y-m-d");
-//$sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
-$sql = "insert into $TABLE (registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
+$sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
 mysql_query($sql, $con) OR die(mysql_error());
 
 //Kolla så att allting gick okej
@@ -121,7 +111,6 @@ shell_exec($cmd);
 $file = fopen("message.txt", "w");
 fwrite($file, "");
 fclose($file);
-//shell_exec('rm message.txt');
 
 echo "Tack för din röst!</br></br>Du kommer inom kort på ett bekräftelsemail med en länk som du måste följa innan rösten räknas. Kontrollera så att mailet inte har sorterats som skräppost. Om du inte fått mailet inom några timmar ta kontakt med Informationsansvarig på <a href=\"mailto:nvf-info@utn.se\">nvf-info@utn.se</a>.";
 
