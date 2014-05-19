@@ -100,7 +100,8 @@ $hashtag = hash('sha256', $mail.$salt);
 
 //Spara rösten, samt uppgifterna från medlemsregistret och vilket datum rösten registrerades.
 $date = date("Y-m-d");
-$sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
+//$sql = "insert into $TABLE (lastname, firstname, persnr, mail, registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$lastname', '$firstname', '$bday', '$mail', '$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
+$sql = "insert into $TABLE (registred, labbrock, overall, skamkappa, blank, validated, hashtag) values ('$date', '$labbrock', '$overall', '$skamkappa', '$blankt', '0', '$hashtag')";
 mysql_query($sql, $con) OR die(mysql_error());
 
 //Kolla så att allting gick okej
