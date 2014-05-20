@@ -10,7 +10,7 @@ $hashtag = $_GET[v];
 
 //Anslut till mysqlservern
 $con = mysql_connect("localhost", "fyskam", "") OR die(mysql_error());
-mysql_select_db("testvotering", $con) OR die(mysql_error());
+mysql_select_db("votering", $con) OR die(mysql_error());
 $TABLE = 'votes';
 
 //Städa hashtaggen

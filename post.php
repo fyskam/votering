@@ -51,7 +51,7 @@ if (!$row) die('Är du verkligen medlem? ('.mysql_error().')');
 if ( strtolower($row['firstname']) != strtolower($firstname) || strtolower($row['lastname']) != strtolower($lastname) || $row['persnr'] != $bday ) die('Du verkar inte finnas i register. Kolla dina uppgifter');
 
 //Byt databas till rösterna
-mysql_select_db("testvotering", $con) OR die(mysql_error());
+mysql_select_db("votering", $con) OR die(mysql_error());
 $TABLE='votes';
 
 //Kontrollera så att vi inte röstar två gånger
