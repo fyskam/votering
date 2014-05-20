@@ -37,7 +37,7 @@ $result = mysql_query($sql, $con);
 //Kontrollera så att inget har fått fel och vi har hittat något
 if (!$result) die(mysql_error());
 $numrows = mysql_num_rows($result);
-if ($numrows == 0) die('Vi kan inte matcha dina uppgifter i registret. Försök igen.');
+if ($numrows == 0) die('Vi kan inte matcha dina uppgifter i registret. Försök igen. Om du inte är medlem kan du registrera dig på <a href="http://fyskam.fysik.uu.se/register">http://fyskam.fysik.uu.se/register</a>');
 
 //Om vi har fått något annat än exakt 1 träff har något gått fel
 if ($numrows != 1) die('Vi verkar ha fått fler än en träff på dina uppgifter. Kontakta Informationsansvarig på <a href="mailto:nvf-info@utn.se">nvf-info@utn.se</a>.');
